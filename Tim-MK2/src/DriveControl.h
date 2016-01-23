@@ -25,7 +25,6 @@ private:
 	bool precisionDrive;
 	RobotDrive myRobot; // robot drive system
 	XboxController *xbox;
-	DriverStationLCD *dsLCD;
 	float MinPower;
 	float RightMotorSpeed;
 	float LeftMotorSpeed;

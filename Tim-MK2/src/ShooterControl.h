@@ -54,7 +54,6 @@ private:
 	Relay* AngleMotorRelay;
 
 	XboxController *xbox;
-	DriverStationLCD *dsLCD;
 
 	DigitalInput *lowerLimit;
 	DigitalInput *upperLimit;

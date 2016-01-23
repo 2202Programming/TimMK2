@@ -10,12 +10,11 @@
 PneumaticsControl::PneumaticsControl() {
 
 	xbox = XboxController::getInstance();
-	dsLCD = DriverStationLCD::GetInstance();
 	shooterControl = ShooterControl::getInstance();
 
 	// pressure switch is at Digital input 5,
 	// compressor channel is at relay output 4,
-	compressor = new Compressor(5, 4);
+	compressor = new Compressor(5);
 	//solenoid module is 2,
 	//solenoid channel is at port 1 of the module
 	triggerSolenoid = new Solenoid(1, 1);
@@ -60,13 +59,10 @@ void PneumaticsControl::fire() {
 void PneumaticsControl::chambering() {
 	if (xbox->isLeftTriggerHeld()) {
 		if (retractSolenoid->Get()) {
-			dsLCD->PrintfLine(DriverStationLCD::kUser_Line5, "chambering");
-			dsLCD->UpdateLCD();
 			triggerSolenoid->Set(true);
 			retractSolenoid->Set(true);
 		}
 	} else {
-		dsLCD->UpdateLCD();
 		triggerSolenoid->Set(false);
 		retractSolenoid->Set(false);
 	}
@@ -76,14 +72,10 @@ void PneumaticsControl::autoFire(bool fireNow) {
 	if (triggerSolenoid->Get() == false && fireNow) {
 		triggerSolenoid->Set(true);
 		retractSolenoid->Set(false);
-		dsLCD->PrintfLine(DriverStationLCD::kUser_Line4, "fire");
-		dsLCD->UpdateLCD();
 		autoTimer.Start();
 	}
 
 	if (autoTimer.Get() > .5) {
-		dsLCD->PrintfLine(DriverStationLCD::kUser_Line4, "retract");
-		dsLCD->UpdateLCD();
 		autoTimer.Stop();
 		autoTimer.Reset();
 		triggerSolenoid->Set(false);

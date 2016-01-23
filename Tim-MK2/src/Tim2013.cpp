@@ -23,7 +23,6 @@ class Tim2013: public IterativeRobot {
 
 public:
 	Tim2013(void) {
-		driverStation = DriverStation::GetInstance();
 		shooterControl = ShooterControl::getInstance();
 		ledRelay = new Relay(8, Relay::kForwardOnly);
 		ledRelay->Set(Relay::kOn);
@@ -44,7 +43,7 @@ public:
 		}
 	}
 
-}
-START_ROBOT_CLASS(Tim2013)
-;
+};
+START_ROBOT_CLASS(Tim2013);
+
 

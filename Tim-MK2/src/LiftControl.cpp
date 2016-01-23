@@ -19,7 +19,6 @@ LiftControl *LiftControl::getInstance() {
 LiftControl::LiftControl() {
 	isGoingUp = true;
 	xbox = XboxController::getInstance();
-	dsLCD = DriverStationLCD::GetInstance();
 	solenoidTop = new Solenoid(SOLENOIDMODULE, TOPCHANNEL);
 	solenoidBot = new Solenoid(SOLENOIDMODULE, BOTCHANNEL);
 	shooterControl = ShooterControl::getInstance();

@@ -14,7 +14,6 @@ DriveControl::DriveControl() :
 	myRobot(FRONTLEFTMOTOR, BACKLEFTMOTOR, FRONTRIGHTMOTOR, BACKRIGHTMOTOR) {
 	xbox = XboxController::getInstance();
 	myRobot.SetExpiration(0.1);
-	dsLCD = DriverStationLCD::GetInstance();
 	MinPower = DEFAULT_MIN_POWER;
 	RightMotorSpeed = 0;
 	LeftMotorSpeed = 0;
@@ -86,14 +85,11 @@ float DriveControl::accelerateMotor(float stickValue, float MotorValue,
 	if (isBackPressed) {
 		if (precisionDrive) {
 			precisionDrive = false;
-			dsLCD->PrintfLine(DriverStationLCD::kUser_Line6, "");
 
 		} else {
 			precisionDrive = true;
-			dsLCD->PrintfLine(DriverStationLCD::kUser_Line6, "MicroCtrl On");
 		}
 	}
-	dsLCD->UpdateLCD();
 
 	if (precisionDrive) {
 		stickValue = stickValue * .5;
@@ -215,9 +211,6 @@ void DriveControl::runTank() {
 	LeftMotorSpeed = accelerateMotor(lefty, LeftMotorSpeed, timerValue);
 	RightMotorSpeed = accelerateMotor(righty, RightMotorSpeed, timerValue);
 	myRobot.TankDrive(-1 * LeftMotorSpeed, -1 * RightMotorSpeed);
-	dsLCD->PrintfLine(DriverStationLCD::kUser_Line4, "speed: %f",
-			RightMotorSpeed);
-	dsLCD->UpdateLCD();
 	accelTimer.Reset();
 	accelTimer.Start();
 
@@ -282,11 +275,9 @@ void DriveControl::runArcadeNoAcceleration() {
 	if (isBackPressed) {
 		if (precisionDrive) {
 			precisionDrive = false;
-			dsLCD->PrintfLine(DriverStationLCD::kUser_Line6, "");
 
 		} else {
 			precisionDrive = true;
-			dsLCD->PrintfLine(DriverStationLCD::kUser_Line6, "MicroCtrl On");
 		}
 	}
 	if (precisionDrive)
@@ -297,7 +288,6 @@ void DriveControl::runArcadeNoAcceleration() {
 
 	//dsLCD->PrintfLine(DriverStationLCD::kUser_Line5, "speed: %f", moveValue);
 //	dsLCD->PrintfLine(DriverStationLCD::kUser_Line4, "rotate: %f", rotateValue);
-	dsLCD->UpdateLCD();
 }
 
 bool DriveControl::runAuto() {

@@ -8,9 +8,9 @@
 #include "ShooterControl.h"
 #include "XboxController.h"
 
-static ShooterControl *shootercontrol = NULL;
+static ShooterControl *shootercontrol = 0;
 ShooterControl *ShooterControl::getInstance() {
-	if (shootercontrol == NULL) {
+	if (shootercontrol == 0) {
 		shootercontrol = new ShooterControl();
 	}
 	return shootercontrol;
@@ -19,7 +19,6 @@ ShooterControl *ShooterControl::getInstance() {
 ShooterControl::ShooterControl() {
 
 	xbox = XboxController::getInstance();
-	dsLCD = DriverStationLCD::GetInstance();
 
 	AngleMotor = new Victor(SHOOTERANGLEMOTORPORT);
 
@@ -60,9 +59,6 @@ void ShooterControl::ShooterSeperateCycleSpeed() {
 		if (Shooter2Speed > 1)
 			Shooter2Speed = 0;
 	}
-	dsLCD->PrintfLine(DriverStationLCD::kUser_Line2, "s1: %f, s2: %f",
-			Shooter1Speed, Shooter2Speed);
-	dsLCD->UpdateLCD();
 
 	shooterMotor1->Set(Shooter1Speed);
 	shooterMotor2->Set(Shooter2Speed);
@@ -121,10 +117,6 @@ void ShooterControl::ShooterCycleBehindSpeed() {
 		Shooter1Speed = Shooter2Speed - SHOOTERSPEEDSTEPDIFF;
 	}
 
-	dsLCD->PrintfLine(DriverStationLCD::kUser_Line2, "shooterspeed: %f",
-			Shooter2Speed);
-	dsLCD->UpdateLCD();
-
 	shooterMotor1->Set(Shooter1Speed);
 	shooterMotor2->Set(Shooter2Speed);
 
@@ -166,10 +158,7 @@ void ShooterControl::ShooterCycleSpeed() {
 
 	shooterMotor1->Set(Shooter1Speed);
 	shooterMotor2->Set(Shooter2Speed);
-	dsLCD->PrintfLine(DriverStationLCD::kUser_Line2, "s1: %f s2:%f",
-			shooterMotor1->Get(), shooterMotor2->Get());
-	dsLCD->UpdateLCD();
-}
+	}
 
 bool ShooterControl::isLowestAngle() {
 	return !lowerLimit->Get();
@@ -201,10 +190,6 @@ void ShooterControl::ShooterAngle(float angleDirection) {
 	} else {
 		AngleMotor->Set(0.0);
 	}
-
-	dsLCD->PrintfLine(DriverStationLCD::kUser_Line3, "U: %i L: %i", upperOn,
-			lowerOn);
-	dsLCD->UpdateLCD();
 }
 
 bool ShooterControl::isRunning() {

@@ -28,7 +28,6 @@ private:
 	Timer solenoidTimer;
 	//Timer autonomousTimer;
 	XboxController *xbox;
-	DriverStationLCD *dsLCD;
 	Compressor *compressor;
 	Solenoid *triggerSolenoid;
 	Solenoid *retractSolenoid;

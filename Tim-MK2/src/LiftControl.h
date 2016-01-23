@@ -29,7 +29,6 @@ private:
 
 
 	XboxController *xbox;
-	DriverStationLCD *dsLCD;
 
 	Solenoid *solenoidTop;
 	Solenoid *solenoidBot;
